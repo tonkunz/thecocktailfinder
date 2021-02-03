@@ -1,4 +1,4 @@
-import 'Drink.dart';
+import 'drink.dart';
 
 class Drinks {
   List<Drink> drinks;

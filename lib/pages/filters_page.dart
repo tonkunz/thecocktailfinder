@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thecocktailfinder/blocs/filters_bloc.dart';
 import 'package:thecocktailfinder/models/filter_option.dart';
-import 'package:thecocktailfinder/repositories/filters_repository.dart';
 
 class FiltersPage extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _FiltersPageState extends State<FiltersPage> {
 
   @override
   Widget build(BuildContext context) {
-    FiltersRepository _repo = new FiltersRepository();
+    final _bloc = Provider.of<FiltersBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,18 +52,12 @@ class _FiltersPageState extends State<FiltersPage> {
               }).toList(),
             ),
           ),
-
-          //Teste
-          FutureBuilder(
-            future: _repo.getFilters('c'),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text("Data: ${snapshot.data.categories[0].strCategory}");
-              } else {
-                return Text("Loading...");
-              }
-            },
-          )
+          _bloc.categories.length != 0
+              ? Text("Categoria Teste: ${_bloc.categories[0].strCategory}")
+              : Text("Carregando categorias..."),
+          _bloc.glasses.length != 0
+              ? Text("Glass Teste: ${_bloc.glasses[0].strGlass}")
+              : Text("Carregando glasses..."),
         ],
       ),
     );
