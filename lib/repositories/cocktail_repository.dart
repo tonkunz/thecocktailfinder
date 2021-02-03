@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:thecocktailfinder/models/Drink.dart';
-import 'CustomDio.dart';
+import 'package:thecocktailfinder/models/drink.dart';
+import 'custom_dio.dart';
 
 class CocktailRepository {
   final Dio dio = getDio();

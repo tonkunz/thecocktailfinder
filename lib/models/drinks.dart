@@ -6,16 +6,12 @@ class Drinks {
   Drinks({this.drinks});
 
   Drinks.fromJson(Map<String, dynamic> json) {
-    print("Drinks from JSON triggered");
-
     if (json['drinks'] != null) {
-      print("conversion started");
       List<Drink> drinks = [];
 
       json['drinks'].forEach((v) {
         drinks.add(new Drink.fromJson(v));
       });
-      print("Drinks now $drinks");
     }
   }
 

@@ -1,6 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:thecocktailfinder/models/Drink.dart';
+import 'package:thecocktailfinder/models/drink.dart';
 
 class DrinkCard extends StatelessWidget {
   final Drink drink;

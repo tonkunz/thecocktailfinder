@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thecocktailfinder/pages/HomePage.dart';
+import 'package:thecocktailfinder/pages/home_page.dart';
 
 void main() {
   runApp(MyApp());

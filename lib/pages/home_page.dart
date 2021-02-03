@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thecocktailfinder/pages/FilterModalPage.dart';
-import 'package:thecocktailfinder/pages/widgets/DrinkCard.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:thecocktailfinder/repositories/CocktailRepository.dart';
+import 'package:thecocktailfinder/pages/filters_page.dart';
+import 'package:thecocktailfinder/repositories/cocktail_repository.dart';
+import 'widgets/drink_card.dart';
 
 class HomePage extends StatelessWidget {
   final String logo = 'assets/logo.svg';
@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
     final String result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FilterModalPage(),
+        builder: (context) => FiltersPage(),
       ),
     );
 
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CocktailRepository repo = new CocktailRepository();
+    CocktailRepository _repo = new CocktailRepository();
 
     return Scaffold(
       appBar: AppBar(
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
       body: Container(
         color: Colors.black12,
         child: FutureBuilder(
-            future: repo.getDrinksByFirstLetter(),
+            future: _repo.getDrinksByFirstLetter(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return GridView.count(
@@ -70,11 +70,7 @@ class HomePage extends StatelessWidget {
           Icons.search,
           color: Colors.white,
         ),
-        onPressed: () {
-          print("Floating button pressed");
-
-          this._navigateToFiltersPage(context);
-        },
+        onPressed: () => this._navigateToFiltersPage(context),
       ),
     );
   }

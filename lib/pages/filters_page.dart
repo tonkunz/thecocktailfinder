@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:thecocktailfinder/models/FilterOption.dart';
+import 'package:thecocktailfinder/models/filter_option.dart';
+import 'package:thecocktailfinder/repositories/filters_repository.dart';
 
-class FilterModalPage extends StatefulWidget {
+class FiltersPage extends StatefulWidget {
   @override
-  _FilterModalPageState createState() => _FilterModalPageState();
+  _FiltersPageState createState() => _FiltersPageState();
 }
 
-class _FilterModalPageState extends State<FilterModalPage> {
+class _FiltersPageState extends State<FiltersPage> {
   FilterType _tipoSelecionado;
 
   final List<FilterType> _filtros = [
@@ -26,6 +27,8 @@ class _FilterModalPageState extends State<FilterModalPage> {
 
   @override
   Widget build(BuildContext context) {
+    FiltersRepository _repo = new FiltersRepository();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Consulta de Drinks'),
@@ -48,6 +51,18 @@ class _FilterModalPageState extends State<FilterModalPage> {
               }).toList(),
             ),
           ),
+
+          //Teste
+          FutureBuilder(
+            future: _repo.getFilters('c'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text("Data: ${snapshot.data.categories[0].strCategory}");
+              } else {
+                return Text("Loading...");
+              }
+            },
+          )
         ],
       ),
     );
