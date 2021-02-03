@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:thecocktailfinder/pages/FilterModalPage.dart';
 import 'package:thecocktailfinder/pages/widgets/DrinkCard.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thecocktailfinder/repositories/CocktailRepository.dart';
 
 class HomePage extends StatelessWidget {
   final String logo = 'assets/logo.svg';
+
+  _navigateToFiltersPage(BuildContext context) async {
+    // TODO: Pegar o resultado da consulta ao fechar página de filtros
+    final String result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FilterModalPage(),
+      ),
+    );
+
+    print("Result $result");
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Modal Fechado'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +32,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 95,
-        flexibleSpace: Padding(
-          padding: EdgeInsets.only(top: 40),
-          child: SvgPicture.asset(logo, height: 55),
+        flexibleSpace: Container(
+          child: Padding(
+            padding: EdgeInsets.only(top: 40),
+            child: SvgPicture.asset(logo, height: 55),
+          ),
         ),
       ),
       body: Container(
@@ -36,6 +57,24 @@ class HomePage extends StatelessWidget {
                 );
               }
             }),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text(
+          "Filtrar",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        icon: Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          print("Floating button pressed");
+
+          this._navigateToFiltersPage(context);
+        },
       ),
     );
   }

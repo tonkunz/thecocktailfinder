@@ -13,10 +13,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // Tema da aplicação, pode futuramente ir para um arquivo separado
       theme: ThemeData(
-          primarySwatch: Colors.purple,
-          brightness: Brightness.light,
-          primaryColor: Color(0xff583d72),
-          accentColor: Color(0xffff8e71)),
+        primarySwatch: Colors.purple,
+        brightness: Brightness.light,
+        primaryColor: Color(0xff583d72),
+        accentColor: Color(0xffff8e71),
+      ),
       home: HomePage(),
     );
   }
