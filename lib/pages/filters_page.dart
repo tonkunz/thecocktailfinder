@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thecocktailfinder/models/filter_option.dart';
+import 'package:thecocktailfinder/models/filter_selected.dart';
+import 'package:thecocktailfinder/pages/shared/custom_button.dart';
 
 // Dropdown Widgets
 import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/category_dropdown.dart';
@@ -55,7 +57,14 @@ class _FiltersPageState extends State<FiltersPage> {
             ? IngredientDropdown()
             : Text("Carregando ingredientes...");
       default:
-        return Text("Escolha um Tipo de Filtro");
+        return Text(
+          "Nenhum filtro escolhido",
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        );
     }
   }
 
@@ -66,6 +75,13 @@ class _FiltersPageState extends State<FiltersPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Consulta de Drinks'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            _bloc.setFilterSelected(FilterSelected(type: "", param: ""));
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Column(
         children: [
@@ -76,6 +92,8 @@ class _FiltersPageState extends State<FiltersPage> {
               icon: Icon(Icons.arrow_downward),
               onChanged: (FilterType value) {
                 setState(() => _tipoSelecionado = value);
+                // Reseta o parâmetro selecionado assim que muda o tipo do parâmetro
+                _bloc.setFilterSelected(FilterSelected(param: "", type: ""));
               },
               items: this._filtros.map((FilterType filtro) {
                 return DropdownMenuItem(
@@ -85,7 +103,21 @@ class _FiltersPageState extends State<FiltersPage> {
               }).toList(),
             ),
           ),
+          SizedBox(height: 15),
           handleDropdown(context, _bloc),
+          SizedBox(height: 15),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            child: CustomButton(
+              btnText: "BUSCAR",
+              fnc: () {
+                // TODO: Dispara a busca e filtra os Drinks
+                print("Teste fnc enviada!");
+              },
+              icon: Icons.search,
+              isDisabled: _bloc.selectedFilter.param == "" ? true : false,
+            ),
+          ),
         ],
       ),
     );

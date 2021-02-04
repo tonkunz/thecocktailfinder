@@ -31,9 +31,6 @@ class _NameDrinkInputState extends State<NameDrinkInput> {
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
         controller: _nameCtrl,
-        onEditingComplete: () {
-          print("Agora pode salvar os dados");
-        },
         onChanged: (String value) {
           _bloc.setFilterSelected(
             FilterSelected(param: value, type: "n"),
