@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thecocktailfinder/blocs/filters_bloc.dart';
 import 'package:thecocktailfinder/models/filter_option.dart';
+
+// Dropdown Widgets
 import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/category_dropdown.dart';
 import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/glass_dropdown.dart';
 import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/ingredients_dropdown.dart';
+import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/namedrink_input.dart';
+import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/teor_dropdown.dart';
+
+// BloC
+import 'package:thecocktailfinder/blocs/filters_bloc.dart';
 
 class FiltersPage extends StatefulWidget {
   @override
@@ -29,8 +35,13 @@ class _FiltersPageState extends State<FiltersPage> {
     this._tipoSelecionado = this._filtros[0];
   }
 
+  // Método que retorna qual o Widget ideal baseado no FilterType
   Widget handleDropdown(BuildContext context, FiltersBloc bloc) {
     switch (_tipoSelecionado.type) {
+      case "nome":
+        return NameDrinkInput();
+      case "teor":
+        return TeorDropdown();
       case "categoria":
         return bloc.categories.length != 0
             ? CategoryDropdown()

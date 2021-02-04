@@ -10,6 +10,7 @@ class FiltersBloc extends ChangeNotifier {
 
   // Filtro por grau de álcool
   final List<String> alcoholic = [
+    "Selecione o teor Alcoólico",
     "Alcoholic",
     "Non alcoholic",
     "Optional alcohol"
