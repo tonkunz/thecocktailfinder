@@ -32,7 +32,10 @@ class _GlassDropdownState extends State<GlassDropdown> {
 
           // Seta qual o filtro selecionado no BloC
           _bloc.setFilterSelected(
-            FilterSelected(param: value.strGlass, type: "g"),
+            FilterSelected(
+              param: value.strGlass.contains("Selecione") ? "" : value.strGlass,
+              type: "g",
+            ),
           );
         },
         items: _bloc.glasses.map((GlassFilter glass) {

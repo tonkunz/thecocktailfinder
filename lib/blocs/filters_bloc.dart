@@ -35,7 +35,7 @@ class FiltersBloc extends ChangeNotifier {
       UnmodifiableListView(_ingredients);
 
   // Prop e Getter p/ filtro selectionado
-  FilterSelected _filterSelected = new FilterSelected();
+  FilterSelected _filterSelected = new FilterSelected(param: "", type: "");
 
   FilterSelected get selectedFilter => _filterSelected;
 
@@ -48,7 +48,8 @@ class FiltersBloc extends ChangeNotifier {
   // Fetch de todas as categorais da API
   getCategories() async {
     _categories = await _filtersRepo.getFilters("c");
-    _categories.insert(0, CategoryFilter(strCategory: "Escolha uma Categoria"));
+    _categories.insert(
+        0, CategoryFilter(strCategory: "Selecione uma Categoria"));
     notifyListeners();
   }
 

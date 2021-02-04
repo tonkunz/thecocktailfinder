@@ -32,7 +32,12 @@ class _IngredientDropdownState extends State<IngredientDropdown> {
 
           // Seta qual o filtro selecionado no BloC
           _bloc.setFilterSelected(
-            FilterSelected(param: value.strIngredient1, type: "i"),
+            FilterSelected(
+              param: value.strIngredient1.contains("Selecione")
+                  ? ""
+                  : value.strIngredient1,
+              type: "i",
+            ),
           );
         },
         items: _bloc.ingredients.map((IngredientFilter ing) {

@@ -24,7 +24,10 @@ class _TeorDropdownState extends State<TeorDropdown> {
           setState(() => _teorSelected = value);
 
           // Seta o filtro selecionado no BloC
-          _bloc.setFilterSelected(FilterSelected(param: value, type: "a"));
+          _bloc.setFilterSelected(FilterSelected(
+            param: value.contains("Selecione") ? "" : value,
+            type: "a",
+          ));
         },
         items: _bloc.alcoholic.map((String alc) {
           return DropdownMenuItem(

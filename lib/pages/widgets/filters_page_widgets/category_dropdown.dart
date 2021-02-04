@@ -32,7 +32,12 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
 
           // Seta qual o filtro selecionado no BloC
           _bloc.setFilterSelected(
-            FilterSelected(param: value.strCategory, type: "c"),
+            FilterSelected(
+              param: value.strCategory.contains("Selecione")
+                  ? ""
+                  : value.strCategory,
+              type: "c",
+            ),
           );
         },
         items: _bloc.categories.map((CategoryFilter cat) {
