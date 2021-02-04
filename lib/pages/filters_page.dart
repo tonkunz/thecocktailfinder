@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thecocktailfinder/blocs/filters_bloc.dart';
 import 'package:thecocktailfinder/models/filter_option.dart';
+import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/category_dropdown.dart';
+import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/glass_dropdown.dart';
+import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/ingredients_dropdown.dart';
 
 class FiltersPage extends StatefulWidget {
   @override
@@ -12,18 +15,37 @@ class _FiltersPageState extends State<FiltersPage> {
   FilterType _tipoSelecionado;
 
   final List<FilterType> _filtros = [
-    new FilterType(text: "Escolha um Filtro", type: ""),
-    new FilterType(text: "Filtrar por Nome", type: "nome"),
-    new FilterType(text: "Filtrar por teor Alcoólico", type: "teor"),
-    new FilterType(text: "Filtrar por Categoria", type: "categoria"),
-    new FilterType(text: "Filtrar por Tipo do Copo", type: "copo"),
-    new FilterType(text: "Filtrar por Ingrediente", type: "ingrediente"),
+    FilterType(text: "Escolha um Filtro", type: ""),
+    FilterType(text: "Filtrar por Nome", type: "nome"),
+    FilterType(text: "Filtrar por teor Alcoólico", type: "teor"),
+    FilterType(text: "Filtrar por Categoria", type: "categoria"),
+    FilterType(text: "Filtrar por Tipo do Copo", type: "copo"),
+    FilterType(text: "Filtrar por Ingrediente", type: "ingrediente"),
   ];
 
   @override
   void initState() {
     super.initState();
     this._tipoSelecionado = this._filtros[0];
+  }
+
+  Widget handleDropdown(BuildContext context, FiltersBloc bloc) {
+    switch (_tipoSelecionado.type) {
+      case "categoria":
+        return bloc.categories.length != 0
+            ? CategoryDropdown()
+            : Text("Carregando Categorias...");
+      case "copo":
+        return bloc.glasses.length != 0
+            ? GlassDropdown()
+            : Text("Carregando Tipos de Copos...");
+      case "ingrediente":
+        return bloc.ingredients.length != 0
+            ? IngredientDropdown()
+            : Text("Carregando ingredientes...");
+      default:
+        return Text("Escolha um Tipo de Filtro");
+    }
   }
 
   @override
@@ -41,23 +63,18 @@ class _FiltersPageState extends State<FiltersPage> {
             child: DropdownButtonFormField(
               value: this._tipoSelecionado,
               icon: Icon(Icons.arrow_downward),
-              onChanged: (FilterType newValue) {
-                setState(() => _tipoSelecionado = newValue);
+              onChanged: (FilterType value) {
+                setState(() => _tipoSelecionado = value);
               },
               items: this._filtros.map((FilterType filtro) {
-                return new DropdownMenuItem(
+                return DropdownMenuItem(
                   value: filtro,
                   child: Text(filtro.text),
                 );
               }).toList(),
             ),
           ),
-          _bloc.categories.length != 0
-              ? Text("Categoria Teste: ${_bloc.categories[0].strCategory}")
-              : Text("Carregando categorias..."),
-          _bloc.glasses.length != 0
-              ? Text("Glass Teste: ${_bloc.glasses[0].strGlass}")
-              : Text("Carregando glasses..."),
+          handleDropdown(context, _bloc),
         ],
       ),
     );

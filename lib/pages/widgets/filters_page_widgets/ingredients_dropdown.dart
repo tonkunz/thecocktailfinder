@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thecocktailfinder/blocs/filters_bloc.dart';
+import 'package:thecocktailfinder/models/api_filters.dart';
+import 'package:thecocktailfinder/models/filter_selected.dart';
+
+class IngredientDropdown extends StatefulWidget {
+  @override
+  _IngredientDropdownState createState() => _IngredientDropdownState();
+}
+
+class _IngredientDropdownState extends State<IngredientDropdown> {
+  IngredientFilter _ingredientSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _ingredientSelected = context.read<FiltersBloc>().ingredients[0];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final _bloc = Provider.of<FiltersBloc>(context);
+
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: DropdownButtonFormField(
+        value: _ingredientSelected,
+        icon: Icon(Icons.arrow_downward),
+        onChanged: (IngredientFilter value) {
+          setState(() => _ingredientSelected = value);
+
+          // Seta qual o filtro selecionado no BloC
+          _bloc.setFilterSelected(
+            FilterSelected(param: value.strIngredient1, type: "c"),
+          );
+        },
+        items: _bloc.ingredients.map((IngredientFilter ing) {
+          return DropdownMenuItem(
+            value: ing,
+            child: Text(ing.strIngredient1),
+          );
+        }).toList(),
+      ),
+    );
+    ;
+  }
+}
