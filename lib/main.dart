@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:thecocktailfinder/pages/home_page.dart';
 
 // BloC's
+import 'package:thecocktailfinder/blocs/cocktail_bloc.dart';
 import 'package:thecocktailfinder/blocs/filters_bloc.dart';
 
 void main() {
@@ -14,9 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ListenableProvider<FiltersBloc>(
-          create: (_) => FiltersBloc(),
-        ),
+        ListenableProvider<CocktailBloc>(create: (_) => CocktailBloc()),
+        ListenableProvider<FiltersBloc>(create: (_) => FiltersBloc()),
       ],
       child: Main(),
     );

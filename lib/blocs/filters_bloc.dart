@@ -6,7 +6,7 @@ import 'package:thecocktailfinder/repositories/filters_repository.dart';
 
 class FiltersBloc extends ChangeNotifier {
   // Cliente Http
-  final _filtersRepo = new FiltersRepository();
+  final _filtersRepo = FiltersRepository();
 
   // Filtro por grau de álcool
   final List<String> alcoholic = [
