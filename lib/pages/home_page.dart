@@ -8,8 +8,7 @@ import 'widgets/drink_card.dart';
 class HomePage extends StatelessWidget {
   final String logo = 'assets/logo.svg';
 
-  _navigateToFiltersPage(BuildContext context) async {
-    // TODO: Pegar o resultado da consulta ao fechar página de filtros
+  dynamic _navigateToFiltersPage(BuildContext context) async {
     final String result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -17,13 +16,11 @@ class HomePage extends StatelessWidget {
       ),
     );
 
-    print("Result $result");
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Modal Fechado'),
-      ),
-    );
+    if (result != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result)),
+      );
+    }
   }
 
   @override

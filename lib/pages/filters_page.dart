@@ -12,6 +12,7 @@ import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/namedrink_i
 import 'package:thecocktailfinder/pages/widgets/filters_page_widgets/teor_dropdown.dart';
 
 // BloC
+import 'package:thecocktailfinder/blocs/cocktail_bloc.dart';
 import 'package:thecocktailfinder/blocs/filters_bloc.dart';
 
 class FiltersPage extends StatefulWidget {
@@ -70,7 +71,8 @@ class _FiltersPageState extends State<FiltersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = Provider.of<FiltersBloc>(context);
+    final _filtersBloc = Provider.of<FiltersBloc>(context);
+    final _cocktailBloc = Provider.of<CocktailBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +80,7 @@ class _FiltersPageState extends State<FiltersPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            _bloc.setFilterSelected(FilterSelected(type: "", param: ""));
+            _filtersBloc.setFilterSelected(FilterSelected(type: "", param: ""));
             Navigator.pop(context);
           },
         ),
@@ -93,7 +95,8 @@ class _FiltersPageState extends State<FiltersPage> {
               onChanged: (FilterType value) {
                 setState(() => _tipoSelecionado = value);
                 // Reseta o parâmetro selecionado assim que muda o tipo do parâmetro
-                _bloc.setFilterSelected(FilterSelected(param: "", type: ""));
+                _filtersBloc
+                    .setFilterSelected(FilterSelected(param: "", type: ""));
               },
               items: this._filtros.map((FilterType filtro) {
                 return DropdownMenuItem(
@@ -104,18 +107,19 @@ class _FiltersPageState extends State<FiltersPage> {
             ),
           ),
           SizedBox(height: 15),
-          handleDropdown(context, _bloc),
+          handleDropdown(context, _filtersBloc),
           SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             child: CustomButton(
               btnText: "BUSCAR",
               fnc: () {
-                // TODO: Dispara a busca e filtra os Drinks
-                print("Teste fnc enviada!");
+                _cocktailBloc.filterDrinks(_filtersBloc.selectedFilter);
+                Navigator.pop(context, "Filtrando Drinks...");
               },
               icon: Icons.search,
-              isDisabled: _bloc.selectedFilter.param == "" ? true : false,
+              isDisabled:
+                  _filtersBloc.selectedFilter.param == "" ? true : false,
             ),
           ),
         ],

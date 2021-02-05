@@ -14,27 +14,26 @@ class CocktailBloc extends ChangeNotifier {
     getDrinksByFirstLetter();
   }
 
+  // Método utilizado ao entrar no App, alimentando a lista inicial
   getDrinksByFirstLetter() async {
     drinks = await _cocktailRepo.getDrinksByFirstLetter();
     notifyListeners();
   }
 
-  filterDrinks(FilterSelected filter) {
+  // Método "roteador", ou seja, que direciona para o endpoint
+  // correto baseado no filtro escolhido pelo usuário
+  filterDrinks(FilterSelected filter) async {
     switch (filter.type) {
       case "c":
-        // TODO: Fetch por categoria
-        break;
       case "g":
-        // TODO: Fetch por glass
-        break;
       case "i":
-        // TODO: Fetch por ingrediente
-        break;
       case "a":
-        // TODO: Fetch por teor alcoolico
+        drinks = await _cocktailRepo.filterDrinks(filter);
+        notifyListeners();
         break;
       case "n":
-        // TODO: Fetch por nome
+        drinks = await _cocktailRepo.getDrinksByName(filter.param);
+        notifyListeners();
         break;
       default:
         return drinks;
