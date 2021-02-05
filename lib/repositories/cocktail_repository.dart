@@ -34,8 +34,11 @@ class CocktailRepository {
 
   // Helper
   List<Drink> handleResponse(Response res) {
-    return (res.data['drinks'] as List)
-        .map((drink) => Drink.fromJson(drink))
-        .toList();
+    if (res.data['drinks'] != null)
+      return (res.data['drinks'] as List)
+          .map((drink) => Drink.fromJson(drink))
+          .toList();
+    else
+      return [];
   }
 }

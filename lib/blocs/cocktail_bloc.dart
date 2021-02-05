@@ -36,6 +36,13 @@ class CocktailBloc extends ChangeNotifier {
         break;
       case "n":
         drinks = await _cocktailRepo.getDrinksByName(filter.param);
+        if (drinks.isEmpty) {
+          drinks.add(
+            Drink(
+              strDrink: "Sem resultados.",
+            ),
+          );
+        }
         notifyListeners();
         break;
       default:

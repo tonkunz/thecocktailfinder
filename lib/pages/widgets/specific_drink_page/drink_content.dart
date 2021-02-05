@@ -17,7 +17,10 @@ class DrinkContent extends StatelessWidget {
   Widget _paddingText(String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-      child: Text(text),
+      child: Text(
+        text,
+        textAlign: TextAlign.justify,
+      ),
     );
   }
 

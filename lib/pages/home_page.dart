@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:thecocktailfinder/blocs/cocktail_bloc.dart';
 import 'package:thecocktailfinder/pages/filters_page.dart';
+import 'package:thecocktailfinder/pages/widgets/home_page_widgets/no_results.dart';
 import 'widgets/drink_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -23,6 +24,22 @@ class HomePage extends StatelessWidget {
     }
   }
 
+  Widget _handleBodyContent(BuildContext context, CocktailBloc bloc) {
+    if (bloc.drinks.length != 0) {
+      if (bloc.drinks[0].strDrink == "Sem resultados.")
+        return NoResultsOnSearch();
+
+      return GridView.count(
+        crossAxisCount: 2,
+        children: List.generate(bloc.drinks.length, (index) {
+          return DrinkCard(drink: bloc.drinks[index]);
+        }),
+      );
+    } else {
+      return Center(child: CircularProgressIndicator());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _bloc = Provider.of<CocktailBloc>(context);
@@ -37,19 +54,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        color: Colors.black12,
-        child: _bloc.drinks.length != 0
-            ? GridView.count(
-                crossAxisCount: 2,
-                children: List.generate(_bloc.drinks.length, (index) {
-                  return DrinkCard(drink: _bloc.drinks[index]);
-                }),
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
-      ),
+      body: _handleBodyContent(context, _bloc),
       floatingActionButton: FloatingActionButton.extended(
         label: Text(
           "Filtrar",
