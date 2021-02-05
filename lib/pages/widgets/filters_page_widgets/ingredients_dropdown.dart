@@ -15,7 +15,19 @@ class _IngredientDropdownState extends State<IngredientDropdown> {
   @override
   void initState() {
     super.initState();
-    _ingredientSelected = context.read<FiltersBloc>().ingredients[0];
+
+    final _ingredients = context.read<FiltersBloc>().ingredients;
+
+    // Pega o valor de selectedFilter no BloC de Filters
+    FilterSelected isSelectedFilter =
+        context.read<FiltersBloc>().selectedFilter;
+
+    if (isSelectedFilter.param != "") {
+      _ingredientSelected = _ingredients
+          .firstWhere((el) => el.strIngredient1 == isSelectedFilter.param);
+    } else {
+      _ingredientSelected = _ingredients[0];
+    }
   }
 
   @override

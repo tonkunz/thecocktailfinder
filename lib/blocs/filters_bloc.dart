@@ -1,12 +1,23 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:thecocktailfinder/models/api_filters.dart';
+import 'package:thecocktailfinder/models/filter_option.dart';
 import 'package:thecocktailfinder/models/filter_selected.dart';
 import 'package:thecocktailfinder/repositories/filters_repository.dart';
 
 class FiltersBloc extends ChangeNotifier {
   // Cliente Http
   final _filtersRepo = FiltersRepository();
+
+  // Tipos de Filtros possíveis
+  final List<FilterType> filtros = [
+    FilterType(text: "Escolha um Filtro", type: ""),
+    FilterType(text: "Filtrar por Nome", type: "n"),
+    FilterType(text: "Filtrar por teor Alcoólico", type: "a"),
+    FilterType(text: "Filtrar por Categoria", type: "c"),
+    FilterType(text: "Filtrar por Tipo do Copo", type: "g"),
+    FilterType(text: "Filtrar por Ingrediente", type: "i")
+  ];
 
   // Filtro por grau de álcool
   final List<String> alcoholic = [

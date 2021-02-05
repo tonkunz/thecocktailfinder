@@ -15,7 +15,18 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
   @override
   void initState() {
     super.initState();
-    _categorySelected = context.read<FiltersBloc>().categories[0];
+
+    FilterSelected isSelectedFilter =
+        context.read<FiltersBloc>().selectedFilter;
+
+    final _categories = context.read<FiltersBloc>().categories;
+
+    if (isSelectedFilter.param != "") {
+      _categorySelected = _categories
+          .firstWhere((el) => el.strCategory == isSelectedFilter.param);
+    } else {
+      _categorySelected = _categories[0];
+    }
   }
 
   @override

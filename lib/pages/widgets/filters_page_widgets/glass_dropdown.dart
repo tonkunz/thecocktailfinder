@@ -15,7 +15,18 @@ class _GlassDropdownState extends State<GlassDropdown> {
   @override
   void initState() {
     super.initState();
-    _glassSelected = context.read<FiltersBloc>().glasses[0];
+    final _glasses = context.read<FiltersBloc>().glasses;
+
+    // Pega o valor de selectedFilter no BloC de Filters
+    FilterSelected isSelectedFilter =
+        context.read<FiltersBloc>().selectedFilter;
+
+    if (isSelectedFilter.param != "") {
+      _glassSelected =
+          _glasses.firstWhere((el) => el.strGlass == isSelectedFilter.param);
+    } else {
+      _glassSelected = _glasses[0];
+    }
   }
 
   @override

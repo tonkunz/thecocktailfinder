@@ -15,6 +15,13 @@ class _NameDrinkInputState extends State<NameDrinkInput> {
   void initState() {
     super.initState();
     _nameCtrl = TextEditingController();
+
+    FilterSelected isSelectedFilter =
+        context.read<FiltersBloc>().selectedFilter;
+
+    if (isSelectedFilter.param != "") {
+      _nameCtrl.text = isSelectedFilter.param;
+    }
   }
 
   @override

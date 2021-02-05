@@ -26,6 +26,12 @@ class CocktailRepository {
     return handleResponse(response);
   }
 
+  Future<Drink> getDrinkById(int id) async {
+    Response response = await dio.get("/lookup.php?i=$id");
+
+    return Drink.fromJson(response.data['drinks'][0]);
+  }
+
   // Helper
   List<Drink> handleResponse(Response res) {
     return (res.data['drinks'] as List)

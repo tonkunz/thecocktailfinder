@@ -23,37 +23,43 @@ class FiltersPage extends StatefulWidget {
 class _FiltersPageState extends State<FiltersPage> {
   FilterType _tipoSelecionado;
 
-  final List<FilterType> _filtros = [
-    FilterType(text: "Escolha um Filtro", type: ""),
-    FilterType(text: "Filtrar por Nome", type: "nome"),
-    FilterType(text: "Filtrar por teor Alcoólico", type: "teor"),
-    FilterType(text: "Filtrar por Categoria", type: "categoria"),
-    FilterType(text: "Filtrar por Tipo do Copo", type: "copo"),
-    FilterType(text: "Filtrar por Ingrediente", type: "ingrediente"),
-  ];
-
   @override
   void initState() {
     super.initState();
-    this._tipoSelecionado = this._filtros[0];
+    final _filtros = context.read<FiltersBloc>().filtros;
+
+    // Pega o valor de selectedFilter no BloC de Filters
+    FilterSelected isSelectedFilter =
+        context.read<FiltersBloc>().selectedFilter;
+
+    // Por regra, o Dropdown do Flutter exige que a variável que manterá a seleção
+    // de um item seja inicializada com um valor, e que este valor seja um que
+    // esteja na lista de Items do Dropdown. Neste caso a lógica abaixo cuida
+    // para verificar na situação em que o usuário já efetuou uma busca...
+    if (isSelectedFilter.param != "") {
+      _tipoSelecionado =
+          _filtros.firstWhere((el) => el.type == isSelectedFilter.type);
+    } else {
+      _tipoSelecionado = _filtros[0];
+    }
   }
 
   // Método que retorna qual o Widget ideal baseado no FilterType
   Widget handleDropdown(BuildContext context, FiltersBloc bloc) {
     switch (_tipoSelecionado.type) {
-      case "nome":
+      case "n":
         return NameDrinkInput();
-      case "teor":
+      case "a":
         return TeorDropdown();
-      case "categoria":
+      case "c":
         return bloc.categories.length != 0
             ? CategoryDropdown()
             : Text("Carregando Categorias...");
-      case "copo":
+      case "g":
         return bloc.glasses.length != 0
             ? GlassDropdown()
             : Text("Carregando Tipos de Copos...");
-      case "ingrediente":
+      case "i":
         return bloc.ingredients.length != 0
             ? IngredientDropdown()
             : Text("Carregando ingredientes...");
@@ -77,13 +83,6 @@ class _FiltersPageState extends State<FiltersPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Consulta de Drinks'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            _filtersBloc.setFilterSelected(FilterSelected(type: "", param: ""));
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: Column(
         children: [
@@ -98,7 +97,7 @@ class _FiltersPageState extends State<FiltersPage> {
                 _filtersBloc
                     .setFilterSelected(FilterSelected(param: "", type: ""));
               },
-              items: this._filtros.map((FilterType filtro) {
+              items: _filtersBloc.filtros.map((FilterType filtro) {
                 return DropdownMenuItem(
                   value: filtro,
                   child: Text(filtro.text),
