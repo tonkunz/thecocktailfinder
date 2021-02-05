@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thecocktailfinder/models/drink.dart';
 import 'ingredients_table.dart';
+import 'rate_drink.dart';
 
 class DrinkContent extends StatelessWidget {
   final Drink drink;
@@ -12,6 +13,13 @@ class DrinkContent extends StatelessWidget {
   DrinkContent({
     @required this.drink,
   });
+
+  Widget _paddingText(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+      child: Text(text),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +42,11 @@ class DrinkContent extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 15),
           // Barra contento a categoria e o teor alcoólico
           Container(
             color: Theme.of(context).accentColor,
             padding: EdgeInsets.symmetric(vertical: 15),
+            margin: EdgeInsets.symmetric(vertical: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -47,7 +55,6 @@ class DrinkContent extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 15),
           // Sessão de Ingredientes e Tabela de Ingredientes
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,9 +64,7 @@ class DrinkContent extends StatelessWidget {
               Text("Ingredientes e Medidas", style: sectionTitleStyle),
             ],
           ),
-          SizedBox(height: 15),
           IngredientsTable(drink: drink),
-          SizedBox(height: 15),
           // Sesão preparo
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -69,18 +74,25 @@ class DrinkContent extends StatelessWidget {
               Text("Preparo", style: sectionTitleStyle),
             ],
           ),
-          SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(drink.strInstructions),
+          _paddingText(drink.strInstructions),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.emoji_emotions_rounded),
+              SizedBox(width: 5),
+              Text("E aí, Curtiu?", style: sectionTitleStyle),
+            ],
           ),
-          SizedBox(height: 15),
+          _paddingText(
+              "Por favor, deixe uma nota para este Drink. Obs: Sua nota ainda não será computada, pois trata-se apenas de uma simulação"),
+          RateDrink(),
+          SizedBox(height: 20)
         ],
       ),
     );
   }
 
-  // Variáveis de estilos (P/ evita repetiçẽos excessivas)
+  // Variáveis de estilos p/ evita repetições excessivas
   final categoryAlcoholicStyles = TextStyle(
     color: Colors.white,
     fontSize: 15,
