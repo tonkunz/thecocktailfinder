@@ -45,12 +45,14 @@ class HomePage extends StatelessWidget {
     final _bloc = Provider.of<CocktailBloc>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 95,
-        flexibleSpace: Container(
-          child: Padding(
-            padding: EdgeInsets.only(top: 40),
-            child: SvgPicture.asset(logo, height: 55),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: SafeArea(
+          child: AppBar(
+            flexibleSpace: Container(
+              padding: EdgeInsets.only(top: 10),
+              child: SvgPicture.asset(logo, height: 60),
+            ),
           ),
         ),
       ),

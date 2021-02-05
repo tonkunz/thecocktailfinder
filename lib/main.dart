@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:thecocktailfinder/pages/home_page.dart';
 
@@ -26,12 +27,17 @@ class MyApp extends StatelessWidget {
 class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color(0xff583d72),
+      statusBarBrightness: Brightness.dark,
+      systemNavigationBarColor: Color(0xff583d72),
+    ));
+
     return MaterialApp(
       title: 'The Cocktail Finder',
       debugShowCheckedModeBanner: false,
       // Tema da aplicação, pode futuramente ir para um arquivo separado
       theme: ThemeData(
-        appBarTheme: AppBarTheme(brightness: Brightness.dark),
         primarySwatch: Colors.purple,
         brightness: Brightness.light,
         primaryColor: Color(0xff583d72),
