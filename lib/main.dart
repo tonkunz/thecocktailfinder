@@ -31,6 +31,7 @@ class Main extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // Tema da aplicação, pode futuramente ir para um arquivo separado
       theme: ThemeData(
+        appBarTheme: AppBarTheme(brightness: Brightness.dark),
         primarySwatch: Colors.purple,
         brightness: Brightness.light,
         primaryColor: Color(0xff583d72),

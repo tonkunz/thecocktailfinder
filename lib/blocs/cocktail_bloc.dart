@@ -10,6 +10,9 @@ class CocktailBloc extends ChangeNotifier {
   // Lista de Drinks
   List<Drink> drinks = [];
 
+  // Drink Specific Details
+  Drink drinkDetails = Drink();
+
   CocktailBloc() {
     getDrinksByFirstLetter();
   }
@@ -38,5 +41,15 @@ class CocktailBloc extends ChangeNotifier {
       default:
         return drinks;
     }
+  }
+
+  getDrinkDetailsById(String id) async {
+    drinkDetails = await _cocktailRepo.getDrinkById(id);
+    notifyListeners();
+  }
+
+  clearDrinkDetails() {
+    drinkDetails = Drink();
+    notifyListeners();
   }
 }

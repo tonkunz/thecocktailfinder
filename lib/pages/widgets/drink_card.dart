@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thecocktailfinder/blocs/cocktail_bloc.dart';
 import 'package:thecocktailfinder/models/drink.dart';
+import 'package:thecocktailfinder/pages/specific_drink_page.dart';
 
 class DrinkCard extends StatelessWidget {
   final Drink drink;
@@ -10,9 +13,18 @@ class DrinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _bloc = Provider.of<CocktailBloc>(context);
+
     return GestureDetector(
       onTap: () {
-        print("Card ${this.drink.idDrink} tapped");
+        _bloc.getDrinkDetailsById(drink.idDrink);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SpecificDrinkPage(),
+          ),
+        );
       },
       child: Card(
         child: Column(
